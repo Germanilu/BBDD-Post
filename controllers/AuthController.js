@@ -3,8 +3,12 @@ const Users                         = require("../models/Users");
 const bcrypt                        = require('bcrypt');
 const jwt                           = require('jsonwebtoken');
 
+
 const authController = {};
 
+/**
+ * Register user account
+ */
 authController.registerUser = async (req, res) => {
     try {
         
@@ -57,7 +61,10 @@ authController.registerUser = async (req, res) => {
 }
 
 
-//Login
+/**
+ * Login User
+ * @returns Token
+ */
 authController.login = async (req, res) => {
     
     try {
@@ -115,7 +122,37 @@ authController.login = async (req, res) => {
         return res.status(400).json(
             {
                 success: false,
-                message: 'Login Failed'
+                message: 'Login Failed',
+                error: error?.message || RangeError
+            }
+        )
+    }
+}
+
+/**
+ * Check user Profile Data
+ * @returns User Profile 
+ */
+authController.profile = async (req, res) => {
+
+    try {
+        const userId        = req.user_id
+        const user          = await Users.findOne({ _id: userId }).select(["-password", "-__v"])
+
+        return res.status(200).json(
+            {
+                success: true,
+                message: "Profilo Utente",
+                data: user
+            }
+        )
+
+    } catch (error) {
+        return res.status(400).json(
+            {
+                success: false,
+                message: 'Impossibile recuperare il profilo utente',
+                error: error?.message || RangeError
             }
         )
     }
