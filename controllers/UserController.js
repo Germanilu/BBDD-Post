@@ -1,7 +1,7 @@
-
+const Role                          = require("../models/Role");
 const Users                         = require("../models/Users");
 const bcrypt                        = require('bcrypt');
-
+const jwt                           = require('jsonwebtoken');
 
 const userController = {};
 //Update user data
@@ -47,5 +47,25 @@ userController.update = async (req, res) => {
         )
     }
 }
+
+userController.updateOtherUser = async (req, res) => {
+
+try {
+    const roleName = req.roleName
+    const userId = req.params.id
+
+
+} catch (error) {
+    return res.status(500).json(
+        {
+            success: false,
+            message: "Impossibile aggiornare i dati di questo utente",
+            error: error?.message || error
+        }
+    )
+}
+
+}
+
 
 module.exports = userController;
