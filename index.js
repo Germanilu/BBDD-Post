@@ -6,6 +6,7 @@ const corsOptions                = require("./libs/cors");
 const app                        = express();
 const port                       = process.env.PORT || 4000;
 const authRoutes                 = require("./routes/auth.routes");
+const userRoutes                 = require("./routes/user.routes");
 
 
 require("dotenv").config();
@@ -13,6 +14,7 @@ createRoles();
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use("/api", authRoutes);
+app.use("/api", userRoutes);
 
 
 
