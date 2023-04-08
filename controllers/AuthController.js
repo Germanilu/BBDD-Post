@@ -16,25 +16,24 @@ authController.registerUser = async (req, res) => {
         const salt                                  = await bcrypt.genSalt(10);
         const encryptedPassword                     = await bcrypt.hash(password, salt);
         const existingUser                          = await Users.find({ email: email })
-        const foundRoles                            = await Role.find({ name: { $in: Users.role}})
-
+        
         /**
          * Validations
-         */
-        if (password.length < 6 || password.length > 10) {
-            return res.status(500).json({
-                success: false,
-                message: 'La password deve comprendere dai 6 ai 10 caratteri'
+        */
+       if (password.length < 6 || password.length > 10) {
+           return res.status(500).json({
+               success: false,
+               message: 'La password deve comprendere dai 6 ai 10 caratteri'
             })
         }
-
+        
         if (existingUser.length > 0) {
             return res.status(500).json({
                 success: false,
                 message: 'Questa email è già in uso'
             })
         }
-
+        
         const user = {
             name,
             surname,
@@ -43,8 +42,9 @@ authController.registerUser = async (req, res) => {
             role: "user"
         }
 
-        user.role = foundRoles.map(role => role._id)
-        await Users.create(user)
+        const foundRoles = await Role.find({ name: { $in: user.role}});
+        user.role = foundRoles.map(role => role._id);
+        await Users.create(user);
 
         return res.status(200).json({
             success: true,
@@ -71,7 +71,7 @@ authController.login = async (req, res) => {
         const { email, password }           = req.body;
         const user                          = await Users.findOne({ email: email })
         const isValidPassword               = bcrypt.compareSync(password, user.password);
-
+        console.log("AQUI")
         /**
          * Validations
          */
