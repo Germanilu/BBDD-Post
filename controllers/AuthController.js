@@ -109,7 +109,7 @@ authController.login = async (req, res) => {
             user_email: user.email,
             user_role: user.role,
         }, process.env.JWT_SECRET, { expiresIn: '5h' })
-
+        console.log(user.role)
         return res.status(200).json(
             {
                 success: true,
