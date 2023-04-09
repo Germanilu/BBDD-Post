@@ -10,7 +10,6 @@ const checkRole = async (req, res, next) => {
         roles.map(e => {
             if (userRole.toString() === e._id.toString()) {
                 req.roleName = e.name;
-                console.log("CheckROLE MIDDLEARE: ",req.roleName)
                 next();
             }
         })
