@@ -1,7 +1,6 @@
 const Role                          = require("../models/Role");
 const Users                         = require("../models/Users");
 const bcrypt                        = require('bcrypt');
-const jwt                           = require('jsonwebtoken');
 const provideRole                   = require('../libs/provideRole');
 
 const userController = {};
