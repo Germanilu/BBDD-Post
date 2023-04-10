@@ -14,6 +14,8 @@ try {
     const {title,description}       = req.body;
     const userObject                = await Users.findById({_id:userId})
                                     .select(["-password", "-__v"]);
+    const userName                  = req.user_name;
+    const userSurname               = req.user_surname;
 
     /**
      * Validations
@@ -24,9 +26,10 @@ try {
             message: 'Devi inserire un titolo e una descrizione del post',
         });
     }
-
     const newPost = {
         userId:userObject,
+        userName,
+        userSurname,
         title,
         description,
     }
