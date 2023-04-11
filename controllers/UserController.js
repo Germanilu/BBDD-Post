@@ -61,21 +61,18 @@ userController.updateOtherUser = async (req, res) => {
 try {
     const requesterRoleName         = req.roleName
     const userId                    = req.params.id
-    const userObject                = await Users.findById({_id:userId})
-    const userRole                  = await provideRole(userObject.role);
+    const userObject                = await Users.find({_id:userId})
+    const userRole                  = await provideRole(userObject[0].role);
 
-
+    
     if(requesterRoleName === "admin" && (userRole === "moderator" || userRole === "user") ){
-
-        const { name, surname, email, password, role }          = req.body
-        const salt                                              = await bcrypt.genSalt(10);
-        const encryptedPassword                                 = await bcrypt.hash(password, salt);
+        
+        const { name, surname, email, role }          = req.body
 
         const updateUser = {
             name,
             surname,
             email,
-            password: encryptedPassword,
             role
         }
         const foundRoles = await Role.find({ name: { $in: updateUser.role}});
