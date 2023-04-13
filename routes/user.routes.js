@@ -5,7 +5,7 @@ const router                        = require('express').Router();
 
 //Routes
 router.put('/editProfile', verifyToken, userController.update);
-router.put('/editProfile/:id', verifyToken,checkRole, userController.updateOtherUser);
+router.put('/editUserProfile/:id', verifyToken,checkRole, userController.updateOtherUser);
 
 module.exports = router;
 

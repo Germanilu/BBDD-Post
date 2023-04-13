@@ -77,7 +77,7 @@ try {
         }
         const foundRoles = await Role.find({ name: { $in: updateUser.role}});
         updateUser.role = foundRoles.map(role => role._id);
-
+        
         await Users.findOneAndUpdate({ _id: userId }, updateUser)
         return res.status(200).json(
             {
@@ -105,7 +105,6 @@ try {
         }
         const foundRoles        = await Role.find({ name: { $in: updateUser.role}});
         updateUser.role         = foundRoles.map(role => role._id);
-
         await Users.findOneAndUpdate({ _id: userId }, updateUser)
         return res.status(200).json(
             {
